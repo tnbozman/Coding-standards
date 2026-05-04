@@ -19,10 +19,10 @@ This repository captures shared coding standards, tooling configuration, and Git
 ├── .github/
 │   ├── copilot-instructions.md     ← Repository-wide Copilot context (auto-applied)
 │   └── agents/                     ← GitHub Copilot agent instruction files
-│       ├── vue3-analysis-agent.md      ← Copilot Agent 1: Vue3 static analysis
-│       ├── dotnet-analysis-agent.md    ← Copilot Agent 2: .NET static analysis
-│       ├── docker-security-agent.md    ← Copilot Agent 3: Docker security analysis
-│       └── project-quality-agent.md   ← Copilot Agent 4: Definition of Done
+│       ├── vue3-analysis-agent.agent.md      ← Copilot Agent 1: Vue3 static analysis
+│       ├── dotnet-analysis-agent.agent.md    ← Copilot Agent 2: .NET static analysis
+│       ├── docker-security-agent.agent.md    ← Copilot Agent 3: Docker security analysis
+│       └── project-quality-agent.agent.md   ← Copilot Agent 4: Definition of Done
 ├── src/
 │   ├── frontend/                   ← Vue 3 / TypeScript project root
 │   │   ├── eslint.config.js        ← ESLint flat-config (Vue3 + TS + Prettier)
@@ -115,7 +115,7 @@ GitHub Copilot will respond with a structured report following the checklist def
 
 ### Agent 1 – Vue3 Static Code Analysis
 
-**File:** `.github/agents/vue3-analysis-agent.md`
+**File:** `.github/agents/vue3-analysis-agent.agent.md`
 
 Reviews `src/frontend/**` changes for:
 - Vue 3 Composition API / `<script setup>` compliance
@@ -130,7 +130,7 @@ Reviews `src/frontend/**` changes for:
 
 ### Agent 2 – .NET Static Code Analysis
 
-**File:** `.github/agents/dotnet-analysis-agent.md`
+**File:** `.github/agents/dotnet-analysis-agent.agent.md`
 
 Reviews `src/backend/**` changes for:
 - Nullable reference type correctness
@@ -145,7 +145,7 @@ Reviews `src/backend/**` changes for:
 
 ### Agent 3 – Docker Security Analysis
 
-**File:** `.github/agents/docker-security-agent.md`
+**File:** `.github/agents/docker-security-agent.agent.md`
 
 Reviews `Dockerfile*`, `docker-compose*.yml`, and `.devcontainer/**` changes for:
 - Base image pinning (no `latest` tag)
@@ -160,7 +160,7 @@ Reviews `Dockerfile*`, `docker-compose*.yml`, and `.devcontainer/**` changes for
 
 ### Agent 4 – Project Quality (Definition of Done)
 
-**File:** `.github/agents/project-quality-agent.md`
+**File:** `.github/agents/project-quality-agent.agent.md`
 
 Applies to **every PR** before merge:
 - PR description is meaningful (explains what + why with enough context for a reviewer)

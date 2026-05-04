@@ -54,7 +54,7 @@ When asked to review this repository's code, use the appropriate agent instructi
 
 | Agent file | When to use |
 |------------|-------------|
-| `.github/agents/vue3-analysis-agent.md` | Reviewing `src/frontend/**` changes |
-| `.github/agents/dotnet-analysis-agent.md` | Reviewing `src/backend/**` changes |
-| `.github/agents/docker-security-agent.md` | Reviewing `Dockerfile`, `docker-compose`, or `.devcontainer` changes |
-| `.github/agents/project-quality-agent.md` | Reviewing any PR for definition-of-done compliance |
+| `.github/agents/vue3-analysis-agent.agent.md` | Reviewing `src/frontend/**` changes |
+| `.github/agents/dotnet-analysis-agent.agent.md` | Reviewing `src/backend/**` changes |
+| `.github/agents/docker-security-agent.agent.md` | Reviewing `Dockerfile`, `docker-compose`, or `.devcontainer` changes |
+| `.github/agents/project-quality-agent.agent.md` | Reviewing any PR for definition-of-done compliance |

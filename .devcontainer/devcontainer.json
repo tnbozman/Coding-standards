@@ -10,6 +10,16 @@
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
 
+  // Mount host .gitconfig and .ssh for seamless git and SSH operations inside the container.
+  // Using ${localEnv:HOME}${localEnv:USERPROFILE} is the recommended cross-platform devcontainer
+  // idiom: on Linux/macOS HOME is set (USERPROFILE empty), on Windows USERPROFILE is set (HOME empty),
+  // so concatenating the two always yields the correct home directory path.
+  // Note: if either path does not exist on the host, remove that mount entry to avoid startup errors.
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached,readonly",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached,readonly"
+  ],
+
   // Ports to forward from the container
   "forwardPorts": [
     5173,
