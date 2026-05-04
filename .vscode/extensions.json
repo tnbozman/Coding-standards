@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    // ── C# / .NET ────────────────────────────────────────────────────────
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    // ── Vue 3 / TypeScript ───────────────────────────────────────────────
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-next",
+    // ── Security / Quality ───────────────────────────────────────────────
+    "SonarSource.sonarlint-vscode",
+    "aquasecurityofficial.trivy-vulnerability-scanner",
+    "exiasr.hadolint",
+    // ── Git / GitHub ─────────────────────────────────────────────────────
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    // ── General DX ───────────────────────────────────────────────────────
+    "editorconfig.editorconfig",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens"
+  ]
+}

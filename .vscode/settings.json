@@ -1,0 +1,69 @@
+{
+  // VSCode workspace-level settings (mirrors what is in devcontainer.json
+  // so the project works the same whether opened in a container or locally).
+
+  // ── Editor defaults ──────────────────────────────────────────────────────
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // ── C# / Roslyn ──────────────────────────────────────────────────────────
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  },
+  "dotnet.server.useOmnisharp": false,
+  "csharp.inlayHints.enableInlayHintsForParameters": true,
+  "csharp.inlayHints.enableInlayHintsForLiteralParameters": true,
+  "csharp.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+  "csharp.inlayHints.enableInlayHintsForIndexerParameters": true,
+  "csharp.inlayHints.enableInlayHintsForOtherParameters": true,
+  "csharp.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": true,
+  "csharp.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent": true,
+  "csharp.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName": true,
+
+  // ── Vue 3 / TypeScript ────────────────────────────────────────────────────
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "vue.inlayHints.missingProps": true,
+  "vue.inlayHints.optionsWrapper": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue"
+  ],
+  "eslint.workingDirectories": [
+    { "directory": "src/frontend", "changeProcessCWD": true }
+  ],
+  "typescript.tsdk": "src/frontend/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ── SonarLint ────────────────────────────────────────────────────────────
+  "sonarlint.rules": {
+    "typescript:S1135": { "level": "on" },
+    "cs:S1135": { "level": "on" }
+  },
+
+  // ── Prettier ─────────────────────────────────────────────────────────────
+  "prettier.requireConfig": true,
+
+  // ── Files ─────────────────────────────────────────────────────────────────
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
+}
