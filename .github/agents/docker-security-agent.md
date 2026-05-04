@@ -1,3 +1,9 @@
+---
+name: Docker Security Analysis
+description: Reviews Dockerfile, docker-compose, and .devcontainer changes for security best practices. Checks base image pinning, non-root user enforcement, Hadolint rules, secret hygiene, compose configuration, and supply chain safety.
+model: gpt-4o
+---
+
 # Agent: Docker Security Analysis
 
 ## Purpose

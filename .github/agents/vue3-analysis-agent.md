@@ -1,3 +1,9 @@
+---
+name: Vue3 Static Code Analysis
+description: Reviews Vue 3 / TypeScript changes in src/frontend/ for compliance with project coding standards. Checks script setup usage, TypeScript safety, reactivity, composables, performance, accessibility, and formatting.
+model: gpt-4o
+---
+
 # Agent: Vue3 Static Code Analysis
 
 ## Purpose

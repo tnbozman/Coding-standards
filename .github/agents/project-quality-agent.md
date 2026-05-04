@@ -1,3 +1,9 @@
+---
+name: Project Quality (Definition of Done)
+description: Reviews any PR against the project Definition of Done checklist. Checks PR description quality, no TODO/FIXME markers, test coverage for new files, no hardcoded secrets, documentation completeness, and EditorConfig compliance.
+model: gpt-4o
+---
+
 # Agent: Project Quality (Definition of Done)
 
 ## Purpose

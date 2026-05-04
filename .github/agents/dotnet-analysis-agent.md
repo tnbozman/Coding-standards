@@ -1,3 +1,9 @@
+---
+name: .NET Static Code Analysis
+description: Reviews C# / .NET 10 changes in src/backend/ for compliance with project coding standards. Checks nullable safety, Roslyn code style, naming conventions, security CA rules, async patterns, DI lifetimes, and CSharpier formatting.
+model: gpt-4o
+---
+
 # Agent: .NET Static Code Analysis
 
 ## Purpose

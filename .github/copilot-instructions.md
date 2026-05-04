@@ -50,11 +50,11 @@ A PR is ready to merge when:
 
 ## Code review agents
 
-When asked to review this repository's code, use the appropriate agent instruction file from `.github/`:
+When asked to review this repository's code, use the appropriate agent instruction file from `.github/agents/`:
 
 | Agent file | When to use |
 |------------|-------------|
-| `vue3-analysis-agent.md` | Reviewing `src/frontend/**` changes |
-| `dotnet-analysis-agent.md` | Reviewing `src/backend/**` changes |
-| `docker-security-agent.md` | Reviewing `Dockerfile`, `docker-compose`, or `.devcontainer` changes |
-| `project-quality-agent.md` | Reviewing any PR for definition-of-done compliance |
+| `.github/agents/vue3-analysis-agent.md` | Reviewing `src/frontend/**` changes |
+| `.github/agents/dotnet-analysis-agent.md` | Reviewing `src/backend/**` changes |
+| `.github/agents/docker-security-agent.md` | Reviewing `Dockerfile`, `docker-compose`, or `.devcontainer` changes |
+| `.github/agents/project-quality-agent.md` | Reviewing any PR for definition-of-done compliance |
