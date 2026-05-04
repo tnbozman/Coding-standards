@@ -1,0 +1,22 @@
+# Root .editorconfig
+# https://editorconfig.org
+root = true
+
+[*]
+indent_style             = space
+end_of_line              = lf
+charset                  = utf-8
+trim_trailing_whitespace = true
+insert_final_newline     = true
+
+[*.cs]
+indent_size = 4
+
+[*.{ts,tsx,js,jsx,vue,json,jsonc,css,scss,html}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false

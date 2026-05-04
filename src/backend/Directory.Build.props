@@ -1,0 +1,59 @@
+<Project>
+  <!--
+    Directory.Build.props
+    Applied to every C# project under src/backend automatically by MSBuild.
+    Configures Roslyn analyzers, nullable reference types, treat-warnings-as-errors,
+    and CSharpier for code formatting.
+  -->
+
+  <PropertyGroup>
+    <!-- Language version -->
+    <LangVersion>latest</LangVersion>
+
+    <!-- Nullable reference types – enforced across the entire solution -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Treat most Roslyn warnings as errors in CI (can be relaxed locally) -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors>CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625</WarningsAsErrors>
+
+    <!-- Enable all .NET SDK built-in Roslyn code-analysis categories -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+
+    <!-- Enforce code style rules as build diagnostics -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- Generate documentation XML (feeds IDE tooltips and SonarQube) -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn><!-- suppress missing-XML-comment warnings for now -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- StyleCop Analyzers – style / naming / documentation rules -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- SonarAnalyzer – security, reliability and maintainability rules -->
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- Roslynator – extra refactoring and diagnostic rules -->
+    <PackageReference Include="Roslynator.Analyzers" Version="4.12.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Link the StyleCop settings file -->
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Condition="Exists('$(MSBuildThisFileDirectory)stylecop.json')" />
+  </ItemGroup>
+
+</Project>

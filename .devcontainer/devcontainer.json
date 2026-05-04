@@ -1,0 +1,125 @@
+{
+  "name": "DotNet 10 + Vue 3 (Fat DevContainer)",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "NODE_VERSION": "22"
+    }
+  },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+
+  // Ports to forward from the container
+  "forwardPorts": [
+    5173,
+    5000,
+    5001,
+    7080
+  ],
+  "portsAttributes": {
+    "5173": { "label": "Vite / Vue3 Dev Server", "onAutoForward": "notify" },
+    "5000": { "label": ".NET HTTP", "onAutoForward": "notify" },
+    "5001": { "label": ".NET HTTPS", "onAutoForward": "notify" },
+    "7080": { "label": "API Gateway", "onAutoForward": "silent" }
+  },
+
+  // VS Code extensions installed inside the container
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // ── C# / .NET ──────────────────────────────────────────────────────
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        // ── Vue 3 / TypeScript ─────────────────────────────────────────────
+        "Vue.volar",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        // ── Security / Quality ─────────────────────────────────────────────
+        "SonarSource.sonarlint-vscode",
+        "aquasecurityofficial.trivy-vulnerability-scanner",
+        "exiasr.hadolint",
+        // ── Git / GitHub ───────────────────────────────────────────────────
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        // ── General DX ─────────────────────────────────────────────────────
+        "editorconfig.editorconfig",
+        "streetsidesoftware.code-spell-checker",
+        "usernamehw.errorlens"
+      ],
+      "settings": {
+        // ── Editor defaults ────────────────────────────────────────────────
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit",
+          "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+        // ── C# / Roslyn ────────────────────────────────────────────────────
+        "[csharp]": {
+          "editor.defaultFormatter": "csharpier.csharpier-vscode"
+        },
+        "dotnet.server.useOmnisharp": false,
+        "csharp.inlayHints.enableInlayHintsForParameters": true,
+        "csharp.inlayHints.enableInlayHintsForLiteralParameters": true,
+        "csharp.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+        "csharp.inlayHints.enableInlayHintsForIndexerParameters": true,
+        "csharp.inlayHints.enableInlayHintsForOtherParameters": true,
+        "csharp.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": true,
+        "csharp.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent": true,
+        "csharp.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName": true,
+
+        // ── Vue 3 / TypeScript ─────────────────────────────────────────────
+        "[vue]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "vue.inlayHints.missingProps": true,
+        "vue.inlayHints.optionsWrapper": true,
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue"
+        ],
+        "eslint.workingDirectories": [
+          { "directory": "src/frontend", "changeProcessCWD": true }
+        ],
+        "typescript.tsdk": "src/frontend/node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+
+        // ── SonarLint ──────────────────────────────────────────────────────
+        "sonarlint.rules": {
+          "typescript:S1135": { "level": "on" },
+          "cs:S1135": { "level": "on" }
+        },
+
+        // ── Prettier ───────────────────────────────────────────────────────
+        "prettier.requireConfig": true,
+
+        // ── Files ──────────────────────────────────────────────────────────
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true
+      }
+    }
+  },
+
+  // Run after the container is created
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  "remoteUser": "vscode"
+}

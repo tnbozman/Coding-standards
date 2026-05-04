@@ -1,0 +1,113 @@
+name: "Agent: Vue3 Static Code Analysis"
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/frontend/**"
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  vue3-static-analysis:
+    name: Vue3 Static Code Analysis
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/frontend
+
+    steps:
+      # ── 1. Checkout ─────────────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history needed for diff
+
+      # ── 2. Identify changed frontend files ──────────────────────────────
+      - name: Get changed Vue3/TypeScript files
+        id: changed-files
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            src/frontend/**/*.vue
+            src/frontend/**/*.ts
+            src/frontend/**/*.tsx
+            src/frontend/**/*.js
+
+      # ── 3. Setup Node ───────────────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: src/frontend/package-lock.json
+
+      # ── 4. Install dependencies ─────────────────────────────────────────
+      - name: Install dependencies
+        run: npm ci
+
+      # ── 5. TypeScript type-check ─────────────────────────────────────────
+      - name: TypeScript type check (vue-tsc)
+        run: npm run type-check
+        if: steps.changed-files.outputs.any_changed == 'true'
+
+      # ── 6. ESLint on changed files only ─────────────────────────────────
+      - name: ESLint – changed files
+        id: eslint
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          CHANGED="${{ steps.changed-files.outputs.all_changed_files }}"
+          # Strip the src/frontend/ prefix since we're already in that dir
+          FILES=$(echo "$CHANGED" | tr ' ' '\n' | sed 's|^src/frontend/||' | tr '\n' ' ')
+          npx eslint $FILES --format @microsoft/eslint-formatter-sarif \
+            --output-file eslint-results.sarif || true
+          npx eslint $FILES --max-warnings 0
+
+      # ── 7. Prettier format check ─────────────────────────────────────────
+      - name: Prettier format check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: npm run format:check
+
+      # ── 8. Upload ESLint SARIF (visible in Security → Code Scanning) ────
+      - name: Upload ESLint SARIF
+        if: always() && steps.eslint.outcome != 'skipped'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: src/frontend/eslint-results.sarif
+          category: eslint-vue3
+
+      # ── 9. Post PR comment summary ────────────────────────────────────────
+      - name: Post analysis summary
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const status = "${{ job.status }}";
+            const emoji  = status === "success" ? "✅" : "❌";
+            const body = [
+              `## ${emoji} Vue3 Static Code Analysis`,
+              "",
+              "| Check | Result |",
+              "|-------|--------|",
+              `| TypeScript type-check | ${{ steps.eslint.outcome == 'skipped' && '⏭ skipped' || (status == 'success' && '✅ passed' || '❌ failed') }} |`,
+              `| ESLint | ${{ steps.eslint.outcome == 'success' && '✅ passed' || steps.eslint.outcome == 'skipped' && '⏭ skipped' || '❌ failed' }} |`,
+              `| Prettier format check | ${{ job.status == 'success' && '✅ passed' || '❌ failed' }} |`,
+              "",
+              "_Triggered by: ${{ github.event.pull_request.head.sha }}_",
+            ].join("\n");
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
